@@ -22,8 +22,8 @@ class UserUpdate(UserBase):
 	password: Optional[str] = Field(None, json_schema_extra={'example': 'Password123'})
 	
 class UserInDBBase(UserBase):
-	id: Optional[int] = None
+	id: Optional[int] = 0
 	
 class User(UserInDBBase):
-	pass
+	password: Optional[str]
 	
