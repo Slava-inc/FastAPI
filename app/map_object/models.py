@@ -1,6 +1,17 @@
 from app.users.database import Base
 from sqlalchemy import Column, Integer, String, DateTime, PickleType
 from app.users.models import User
+import json
+import enum
+from sqlalchemy import Enum
+
+class StatusEnum(enum.Enum):
+    new = 'new'
+    pending = 'pending'
+    accepted = 'accepted'
+    rejected = 'rejected'    
+
+
 
 class Map_Object(Base):
     __tablename__ = "map_object"
@@ -9,7 +20,9 @@ class Map_Object(Base):
     other_titles = Column(String, index=True, unique=False)
     connect = Column(String)
     add_time = Column(DateTime)
-    user = Column(User)
-    coords = Column(PickleType)
-    level = Column(PickleType)
-    images = Column(PickleType)
+    user = Column(Integer)
+    coords = Column(String)
+    level = Column(String)
+    images = Column(PickleType())
+    status = Column('status', Enum(StatusEnum))
+

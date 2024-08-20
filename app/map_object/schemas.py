@@ -1,18 +1,22 @@
 from pydantic import BaseModel, Field
 from typing import Optional
-from app.users.models import User
 from sqlalchemy.types import DateTime
+from datetime import datetime
+from .models import StatusEnum
 
 # new record creation schema
+
+
 class MapCreate(BaseModel):
     title: str
     other_titles: str
     connect: str
-    add_time: DateTime
-    user: User
-    coords = {'latitude': float, 'longitude': float, 'height': int}
-    level = {'winter': str, 'summer': str, 'autumn':str, 'spring': str}
-    images = [{'data':bytes}]    
+    add_time: datetime
+    user: int
+    coords: str
+    level: str
+    images: bytes 
+    status: StatusEnum   
 
 	
 # read record schema (may be extend later)
@@ -21,11 +25,12 @@ class MapRead(BaseModel):
     title: str
     other_titles: str
     connect: str
-    add_time: DateTime
-    user: User
-    coords = {'latitude': float, 'longitude': float, 'height': int}
-    level = {'winter': str, 'summer': str, 'autumn':str, 'spring': str}
-    images = [{'data':bytes}]
+    add_time: datetime
+    user: int
+    coords: str
+    level: str
+    images: bytes
+    status: StatusEnum
 
 # update record schema
 class MapUpdate(BaseModel):
@@ -33,8 +38,9 @@ class MapUpdate(BaseModel):
     title: str
     other_titles: str
     connect: str
-    add_time: DateTime
-    user: User
-    coords = {'latitude': float, 'longitude': float, 'height': int}
-    level = {'winter': str, 'summer': str, 'autumn':str, 'spring': str}
-    images = [{'data':bytes}]
+    add_time: datetime
+    user: int
+    coords: str
+    level: str
+    images: bytes
+    status: StatusEnum

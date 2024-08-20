@@ -29,7 +29,7 @@ def upgrade() -> None:
     sa.Column('user', sa.PickleType(), nullable=True),
     sa.Column('coords', sa.PickleType(), nullable=True),  
     sa.Column('level', sa.PickleType(), nullable=False),
-    sa.Column('images', [sa.BINARY()], nullable=True)   
+    sa.Column('images', sa.BINARY(), nullable=True)   
     )
     # ### end Alembic commands ###
 
