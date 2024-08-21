@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
 
 
-def submitData(db: Session, **kwargs):
+def AddData(db: Session, **kwargs):
 
    try:
       id = db.query(func.max(Map_Object.id)).scalar()
@@ -13,7 +13,10 @@ def submitData(db: Session, **kwargs):
          id = 1
       else:
          id += 1
-      db_map = Map_Object(id=id, title=kwargs.title, other_titles=kwargs.other_titles)
+      db_map = MapCreate(id=id, title=kwargs['title'], other_titles=kwargs['other_titles'], 
+                            connect=kwargs['connect'], add_time=kwargs['add_time'], user=kwargs['user'],
+                            coords=str(kwargs['coords']), level=str(kwargs['level']), images=str(kwargs['images']), status='new')
+
       db.add(db_map)
       db.commit()
       db.refresh(db_map)

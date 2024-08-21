@@ -8,6 +8,7 @@ from .models import StatusEnum
 
 
 class MapCreate(BaseModel):
+    id: Optional[int] = 0
     title: str
     other_titles: str
     connect: str

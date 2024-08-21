@@ -4,6 +4,7 @@ from app.users.models import User
 import json
 import enum
 from sqlalchemy import Enum
+from sqlalchemy.orm import  relationship
 
 from fastapi_storages import FileSystemStorage
 from fastapi_storages.integrations.sqlalchemy import FileType
