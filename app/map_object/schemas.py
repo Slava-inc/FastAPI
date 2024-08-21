@@ -15,7 +15,7 @@ class MapCreate(BaseModel):
     user: int
     coords: str
     level: str
-    images: bytes 
+    images: str 
     status: StatusEnum   
 
 	
@@ -29,7 +29,7 @@ class MapRead(BaseModel):
     user: int
     coords: str
     level: str
-    images: bytes
+    images: str
     status: StatusEnum
 
 # update record schema
@@ -42,5 +42,5 @@ class MapUpdate(BaseModel):
     user: int
     coords: str
     level: str
-    images: bytes
+    images: str
     status: StatusEnum

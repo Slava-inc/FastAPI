@@ -1,9 +1,12 @@
 from app.users.database import Base
-from sqlalchemy import Column, Integer, String, DateTime, PickleType
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, ARRAY
 from app.users.models import User
 import json
 import enum
 from sqlalchemy import Enum
+
+from fastapi_storages import FileSystemStorage
+from fastapi_storages.integrations.sqlalchemy import FileType
 
 class StatusEnum(enum.Enum):
     new = 'new'
@@ -11,6 +14,15 @@ class StatusEnum(enum.Enum):
     accepted = 'accepted'
     rejected = 'rejected'    
 
+class Images(Base):
+    __tablename__ = "images"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    file = Column(FileType(storage=FileSystemStorage(path="/tmp")))
+
+    def __repr__(self):
+        return f'{self.id}: {self.name}'
 
 
 class Map_Object(Base):
@@ -23,6 +35,6 @@ class Map_Object(Base):
     user = Column(Integer)
     coords = Column(String)
     level = Column(String)
-    images = Column(PickleType())
+    images = Column(ARRAY(String, ForeignKey("Images.id")))
     status = Column('status', Enum(StatusEnum))
 
