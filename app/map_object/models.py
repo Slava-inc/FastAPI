@@ -9,11 +9,6 @@ from datetime import datetime
 from fastapi_storages import FileSystemStorage
 from fastapi_storages.integrations.sqlalchemy import FileType
 
-class StatusEnum(enum.Enum):
-    new = 'new'
-    pending = 'pending'
-    accepted = 'accepted'
-    rejected = 'rejected'    
 
 class Images(Base):
     __tablename__ = "images"
@@ -21,6 +16,7 @@ class Images(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     file = Column(FileType(storage=FileSystemStorage(path="/tmp")))
+    # file = Column(ProfileImage.as_mutable(dict))
 
     def __repr__(self):
         return f'{self.id}: {self.name}'

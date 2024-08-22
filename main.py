@@ -33,6 +33,8 @@ async def submitData(data, files: list[UploadFile]):
                             raw_data=kwargs['raw_data'], images=kwargs['images'], status='new')
     if map == None:
         return 'during submition error raised'
+    
+    
     return f'map {map.raw_data["title"]} added!'
 
 # @app.post("/upload/")

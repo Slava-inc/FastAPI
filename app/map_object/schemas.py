@@ -2,8 +2,9 @@ from pydantic import BaseModel, PydanticUserError
 from typing import Optional
 from sqlalchemy.types import DateTime
 from datetime import datetime
-from .models import StatusEnum, Map_Object
-from sqlalchemy import JSON
+from .models import StatusEnum
+from fastapi_storages.integrations.sqlalchemy import FileType
+from sqlalchemy.types import LargeBinary
 
 # new record creation schema
 
@@ -16,7 +17,10 @@ class MapCreate(BaseModel):
     images: list[dict] 
     status: StatusEnum 
 
-
+class ImageCreate(BaseModel):
+    id: Optional[int] = 0
+    name: str
+    file: LargeBinary
 	
 # read record schema (may be extend later)
 # class MapRead(BaseModel):
