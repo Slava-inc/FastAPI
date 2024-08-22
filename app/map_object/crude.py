@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 from .models import Map_Object
-from .schemas import MapCreate, MapUpdate
+from .schemas import MapCreate
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import func
-
+from datetime import datetime
 
 def AddData(db: Session, **kwargs):
 
@@ -13,9 +13,9 @@ def AddData(db: Session, **kwargs):
          id = 1
       else:
          id += 1
-      db_map = MapCreate(id=id, title=kwargs['title'], other_titles=kwargs['other_titles'], 
-                            connect=kwargs['connect'], add_time=kwargs['add_time'], user=kwargs['user'],
-                            coords=str(kwargs['coords']), level=str(kwargs['level']), images=str(kwargs['images']), status='new')
+      date = datetime.strptime(kwargs['add_time'], '%Y-%m-%d %H:%M:%S')
+      db_map = Map_Object(id=id, add_time=date, user_id=kwargs['user'],
+                            raw_data=kwargs['raw_data'], images=kwargs['images'], status='new')
 
       db.add(db_map)
       db.commit()

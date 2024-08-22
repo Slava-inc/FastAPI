@@ -4,7 +4,7 @@ from app.users.models import User
 import json
 import enum
 from sqlalchemy import Enum, JSON
-from sqlalchemy.orm import  relationship
+from datetime import datetime
 
 from fastapi_storages import FileSystemStorage
 from fastapi_storages.integrations.sqlalchemy import FileType
@@ -29,15 +29,9 @@ class Images(Base):
 class Map_Object(Base):
     __tablename__ = "map_object"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    # title = Column(String, index=True, unique=True)
-    # other_titles = Column(String, index=True, unique=False)
-    # connect = Column(String)
     add_time = Column(DateTime)
-    user = Column(Integer)
+    user_id = Column(Integer)
     raw_data = Column(JSON)
-    
-    # coords = Column(String)
-    # level = Column(String)
     images = Column(JSON)
     status = Column('status', Enum(StatusEnum))
 

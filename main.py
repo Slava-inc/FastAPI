@@ -29,12 +29,11 @@ async def register(username: str, email: str, password: str):
 async def submitData(data, files: list[UploadFile]):
     kwargs = json.loads(data)
 
-    map = AddData(db=SessionLocal(), title=kwargs['title'], other_titles=kwargs['other_titles'], 
-                            connect=kwargs['connect'], add_time=kwargs['add_time'], user=kwargs['user'],
-                            coords=str(kwargs['coords']), level=str(kwargs['level']), images=kwargs['images'], status='new')
+    map = AddData(db=SessionLocal(), add_time=kwargs['add_time'], user=kwargs['user'],
+                            raw_data=kwargs['raw_data'], images=kwargs['images'], status='new')
     if map == None:
         return 'during submition error raised'
-    return f'user {map.title} added!'
+    return f'map {map.raw_data["title"]} added!'
 
 # @app.post("/upload/")
 # async def create_upload_file(file: UploadFile):
