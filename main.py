@@ -27,18 +27,26 @@ async def register(username: str, email: str, password: str):
 
 @app.post("/submitData/")
 async def submitData(data, files: list[UploadFile]):
-    kwargs = json.loads(data)
-    print(f'DATA>>>>>>>>: {str(kwargs["images"])}')
-    map = AddData(db=SessionLocal(), add_time=kwargs['add_time'], user=kwargs['user'],
-                            raw_data=kwargs['raw_data'], images=kwargs['images'], status='new')
+    try:
+        kwargs = json.loads(data)
+    except:
+        return {"status": 400, "message": "Ошибка формата аргумента запроса","id": None}
+    try:
+        map = AddData(db=SessionLocal(), add_time=kwargs['add_time'], user=kwargs['user'],
+                                raw_data=kwargs['raw_data'], images=kwargs['images'], status='new')
+    except:
+        return {"status": 400, "message": "Ошибка формата аргумента запроса","id": None}
     if map == None:
-        return 'during map submition error raised'
+        return {"status": 500, "message": "Ошибка подключения к базе данных","id": None}
     
     for im in kwargs['images']:
-        file = AddImage(db=SessionLocal(), id=im['id'], file=files[im['id']-1], name=im['title'])
+        try:
+            file = AddImage(db=SessionLocal(), id=im['id'], file=files[im['id']-1], name=im['title'])
+        except:
+            {"status": 400, "message": "Ошибка формата аргумента запроса","id": None}    
         if file == None:
-            return 'during file upload error raised'    
-    return f'map {map.raw_data["title"]} added!'
+            return {"status": 500, "message": "Ошибка подключения к базе данных","id": None}    
+    return {"status": 200, "message": None, "id": map.id }
 
 # @app.post("/upload/")
 # async def create_upload_file(file: UploadFile):
