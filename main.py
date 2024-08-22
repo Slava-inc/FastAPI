@@ -9,6 +9,18 @@ from app.map_object.crude import AddData, AddImage
 import json
 from fastapi import File, UploadFile
 
+import os
+
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), 'env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+    FSTR_DB_HOST = os.getenv("FSTR_DB_HOST")
+    FSTR_DB_PORT = os.getenv("FSTR_DB_PORT")
+    FSTR_DB_LOGIN = os.getenv("FSTR_DB_LOGIN")
+    FSTR_DB_PASS = os.getenv("FSTR_DB_PASS")    
+    print(f"'FSTR_DB_HOST': {FSTR_DB_HOST}")
+
 # FastAPI instance creation
 app = FastAPI()
 
@@ -47,8 +59,3 @@ async def submitData(data, files: list[UploadFile]):
         if file == None:
             return {"status": 500, "message": "Ошибка подключения к базе данных","id": None}    
     return {"status": 200, "message": None, "id": map.id }
-
-# @app.post("/upload/")
-# async def create_upload_file(file: UploadFile):
-#     # do something with the file
-#     return {"filename": file.filename}
