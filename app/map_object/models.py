@@ -10,6 +10,12 @@ from fastapi_storages import FileSystemStorage
 from fastapi_storages.integrations.sqlalchemy import FileType
 
 
+class StatusEnum(enum.Enum):
+    new = 'new'
+    pending = 'pending'
+    accepted = 'accepted'
+    rejected = 'rejected' 
+
 class Images(Base):
     __tablename__ = "images"
 

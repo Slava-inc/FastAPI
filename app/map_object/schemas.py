@@ -4,7 +4,7 @@ from sqlalchemy.types import DateTime
 from datetime import datetime
 from .models import StatusEnum
 from fastapi_storages.integrations.sqlalchemy import FileType
-from sqlalchemy.types import LargeBinary
+from sqlalchemy.types import LargeBinary, BINARY
 
 # new record creation schema
 
@@ -20,7 +20,7 @@ class MapCreate(BaseModel):
 class ImageCreate(BaseModel):
     id: Optional[int] = 0
     name: str
-    file: LargeBinary
+    file: bytes
 	
 # read record schema (may be extend later)
 # class MapRead(BaseModel):
