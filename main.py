@@ -4,7 +4,7 @@ from app.users.database import SessionLocal
 from app.users.crud import create_user
 
 from app.map_object.schemas import MapCreate
-from app.map_object.crude import AddData, AddImage
+from app.map_object.crude import AddData, AddImage, ReadMap, PatchMap
 
 import json
 from fastapi import File, UploadFile
@@ -25,7 +25,7 @@ if os.path.exists(dotenv_path):
     FSTR_DB_PORT = int(os.getenv("FSTR_DB_PORT"))
     FSTR_DB_LOGIN = os.getenv("FSTR_DB_LOGIN")
     FSTR_DB_PASS = os.getenv("FSTR_DB_PASS")    
-    print(f"'FSTR_DB_HOST': {FSTR_DB_HOST}")
+
 
 # FastAPI instance creation
 app = FastAPI()
@@ -33,6 +33,22 @@ app = FastAPI()
 @app.get("/")
 async def root():
     return {"message": "Hello world"}
+
+@app.get("/submitData/<id>/")
+async def get_map(id: int):
+    map = ReadMap(db=SessionLocal(), id=id)
+    if map == None:
+        return {"status": 400, "message": "Перевал с данным id не найден","id": id} 
+    return map
+
+
+@app.patch("/submitData/<id>/")
+async def patch_map(data:dict, id: int):
+
+    map = PatchMap(data, db=SessionLocal(), id=id)
+
+    return map
+
 
 @app.post("/register/")
 async def register(username: str, email: str, password: str):
