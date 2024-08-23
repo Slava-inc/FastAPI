@@ -12,11 +12,17 @@ from fastapi import File, UploadFile
 import os
 
 from dotenv import load_dotenv
+import uvicorn
+
 dotenv_path = os.path.join(os.path.dirname(__file__), 'env')
+
+FSTR_DB_HOST = '127.0.0.1'
+FSTR_DB_PORT = 8000
+
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
     FSTR_DB_HOST = os.getenv("FSTR_DB_HOST")
-    FSTR_DB_PORT = os.getenv("FSTR_DB_PORT")
+    FSTR_DB_PORT = int(os.getenv("FSTR_DB_PORT"))
     FSTR_DB_LOGIN = os.getenv("FSTR_DB_LOGIN")
     FSTR_DB_PASS = os.getenv("FSTR_DB_PASS")    
     print(f"'FSTR_DB_HOST': {FSTR_DB_HOST}")
@@ -59,3 +65,6 @@ async def submitData(data, files: list[UploadFile]):
         if file == None:
             return {"status": 500, "message": "Ошибка подключения к базе данных","id": None}    
     return {"status": 200, "message": None, "id": map.id }
+
+if __name__ == "__main__":
+    uvicorn.run(app, host=FSTR_DB_HOST, port=FSTR_DB_PORT)
