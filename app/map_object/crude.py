@@ -74,3 +74,11 @@ def PatchMap(data:dict, db:Session, id:int):
    except:
       return {'state': 0, 'message': 'update data error'}
    return {'state': 1}
+
+def ReadUserMaps(db: Session, id:int):
+      try:
+         sel_map = select(Map_Object).where(Map_Object.user_id==id)
+         return db.scalars(sel_map)
+      except:
+         print(f'user with index {id} not found')
+         return None

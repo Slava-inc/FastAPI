@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from app.users.schemas import User
 from app.users.database import SessionLocal
-from app.users.crud import create_user
+from app.users.crud import create_user, get_user_byemail
 
 from app.map_object.schemas import MapCreate
-from app.map_object.crude import AddData, AddImage, ReadMap, PatchMap
+from app.map_object.crude import AddData, AddImage, ReadMap, PatchMap, ReadUserMaps
 
 import json
 from fastapi import File, UploadFile
@@ -40,6 +40,13 @@ async def get_map(id: int):
     if map == None:
         return {"status": 400, "message": "Перевал с данным id не найден","id": id} 
     return map
+
+@app.get("/submitData/<email>")
+async def user_map(email: str):
+    user = get_user_byemail(db=SessionLocal(), email=email)
+    maps = ReadUserMaps(db=SessionLocal(), id=user.id)
+    return [map for map in maps]
+
 
 
 @app.patch("/submitData/<id>/")
