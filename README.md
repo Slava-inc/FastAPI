@@ -10,8 +10,10 @@
 
 ![](images/register.png?raw=true)
 
-# Request/Reply
 
 | Request | Reply |
 |:---|:---|
-| request txt | reply txt |
+| curl -X 'POST' 
+  'http://127.0.0.1:8000/register/?username=user2&email=user2%40example.com&password=123' 
+  -H 'accept: application/json' 
+  -d '' | "user user2 registered!" |
