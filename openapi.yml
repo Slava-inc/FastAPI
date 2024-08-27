@@ -5,7 +5,6 @@ info:
 servers:
   - url: https://127.0.0.1:8000
 
-
 components:
   schemas:
     images: {
@@ -38,6 +37,9 @@ components:
                       }
                   }
     }
+    security:
+      type: string
+
 
 paths:
   /submitData/{id}:
@@ -114,6 +116,7 @@ paths:
       responses:
         '200':
           description: OK
+
 
 
 
