@@ -247,6 +247,47 @@
     </tbody>
 </table>
 
-# error Resposes
+# error Responses
 
-## 
+## get information about mountain pass
+
+| Code | Description |
+|:---|:---|
+| 400 | message: Перевал с данным id не найден,<id> |
+
+## load new pass data
+
+| Code | Description |
+|:---|:---|
+| 400 | message: Ошибка формата аргумента запроса,id: None |
+| 500 | message: Ошибка подключения к базе данных,id: None |
+
+## edit pass data
+
+<table>
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=4>
+             0 <br> 
+            </td rowspan=4>
+            <td>
+            message: map with index {id} not found<br>
+            message: status {name} is fobidden for update<br>
+            message: field user is fobidden for update<br>
+            message: update data error<br>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+## user passes request
+
+| Code | Description |
+|:---|:---|
+| 400 | message: user with index {id} not found |
